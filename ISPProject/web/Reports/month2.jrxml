@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="month" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cfe710cc-521a-4360-b84c-f8bd3a2cea33">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="New Dataset 1" uuid="fe8060f9-fd5c-4aa6-9e27-3ead7789a357">
+		<parameter name="month" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="year" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="loginid" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     lower(concat(pc.first_name,' ',pc.last_name)) AS Name,
+     lower(reverse(substring(reverse(up.username),length(pa.zone)+1))) AS Username,
+     lower(DATE_FORMAT(up.expirydat,'%b %d %Y')) AS ExpiryDate,
+     lower(pa.`flatno`) AS FlatNo,
+     lower(pa.`buildingname`) AS Building,
+     lower(pa.`are`) AS Area,
+     lower(pa.`zone`) AS Zone,
+     lower(pp.`name`) AS PlanName,
+     pp.`duration` AS Duration,
+     pp.`amount` AS Amount,
+     up.`paid` AS Paid,
+     up.`due` AS Due
+FROM
+     `projectdatabase`.`userplaninfo` up INNER JOIN `projectdatabase`.`customerinfo` pc ON up.`username` = pc.`username`
+     INNER JOIN `projectdatabase`.`planinfo` pp ON up.`planid` = pp.`planid`
+     INNER JOIN `projectdatabase`.`addressinfo` pa ON pc.`addressid` = pa.`addressid`
+WHERE
+     (monthname(up.expirydat)) = $P{month}
+     and year(expirydat) = $P{year}
+     and pc.loginid = $P{loginid}
+GROUP BY
+     up.username]]>
+		</queryString>
+		<field name="Name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Username" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ExpiryDate" class="java.lang.String"/>
+		<field name="FlatNo" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Building" class="java.lang.String"/>
+		<field name="Area" class="java.lang.String"/>
+		<field name="Zone" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="PlanName" class="java.lang.String"/>
+		<field name="Duration" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Amount" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Paid" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Due" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="month" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loginid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     lower(concat(pc.first_name,' ',pc.last_name)) AS Name,
+     lower(reverse(substring(reverse(up.username),length(pa.zone)+1))) AS Username,
+     lower(DATE_FORMAT(up.expirydat,'%b %d %Y')) AS ExpiryDate,
+     lower(pa.`flatno`) AS FlatNo,
+     lower(pa.`buildingname`) AS Building,
+     lower(pa.`are`) AS Area,
+     lower(pa.`zone`) AS Zone,
+     lower(pp.`name`) AS PlanName,
+     pp.`duration` AS Duration,
+     pp.`amount` AS Amount,
+     up.`paid` AS Paid,
+     up.`due` AS Due
+FROM
+     `projectdatabase`.`userplaninfo` up INNER JOIN `projectdatabase`.`customerinfo` pc ON up.`username` = pc.`username`
+     INNER JOIN `projectdatabase`.`planinfo` pp ON up.`planid` = pp.`planid`
+     INNER JOIN `projectdatabase`.`addressinfo` pa ON pc.`addressid` = pa.`addressid`
+WHERE
+     (monthname(up.expirydat)) = $P{month}
+     and year(expirydat) = $P{year}
+     and pc.loginid = $P{loginid}
+GROUP BY
+     up.username]]>
+	</queryString>
+	<field name="Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Username" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ExpiryDate" class="java.lang.String"/>
+	<field name="FlatNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Building" class="java.lang.String"/>
+	<field name="Area" class="java.lang.String"/>
+	<field name="Zone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PlanName" class="java.lang.String"/>
+	<field name="Duration" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Amount" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Paid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Due" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="32" width="802" height="32" uuid="5190d816-44fc-4f87-b199-13443b75da38"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="dc958b21-c830-4f8c-85d4-66832792786b">
+						<datasetParameter name="month">
+							<datasetParameterExpression><![CDATA[$P{month}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="year">
+							<datasetParameterExpression><![CDATA[$P{year}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="loginid">
+							<datasetParameterExpression><![CDATA[$P{loginid}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="77aa9cc7-de14-485d-8634-82cbfbe0f083">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader height="30" rowSpan="1"/>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell height="30" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="90" uuid="3e252d24-8bc2-452d-b996-7fad141500a8">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9b4dfa70-7b24-400e-afe9-6d9e3065a28a"/>
+								<text><![CDATA[Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c7a2c702-ef2a-40dc-9aec-ea21a59b0819"/>
+								<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="bf3096d1-50e0-4d2c-849e-443cc3c0e26f">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="4d23eb22-7052-4c45-9a8f-c88a24073094"/>
+								<text><![CDATA[Username]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="b33c3b78-8a4e-49c9-9608-5d29f981296b"/>
+								<textFieldExpression><![CDATA[$F{Username}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="851d56e1-a4ac-4a2b-8c0e-e1c11e5a53b8">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b730337a-d271-4d14-8305-5ea443d9f22e"/>
+								<text><![CDATA[FlatNo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="84adec04-9e2d-4b49-8ed6-4d7d02e4e1d2"/>
+								<textFieldExpression><![CDATA[$F{FlatNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="12619707-62c3-4c75-963d-7fae57e97269">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d3b3162f-cd4b-4742-9a34-ac99fe629bb4"/>
+								<text><![CDATA[Building]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="05e6c17a-5bfb-4053-a0f4-16b6d5f0ec5c"/>
+								<textFieldExpression><![CDATA[$F{Building}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="ec726091-4343-4df7-bb7f-06c514dab8a3">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="09108298-6da3-44ce-adb2-abfd72210f88"/>
+								<text><![CDATA[Area]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="8c0b992f-8c80-4e30-b80c-58e051217869"/>
+								<textFieldExpression><![CDATA[$F{Area}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="399e09a2-8f7b-45b3-95a3-84a4a590f4ba">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="6db74860-774b-43d7-8ab3-29744dc59694"/>
+								<text><![CDATA[Zone]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="5310800f-212b-47f4-abde-35d0cb363ed8"/>
+								<textFieldExpression><![CDATA[$F{Zone}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e94cf8fa-f748-4ace-a0fc-070a18f38882">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7d2ad67b-8f4a-49e0-a593-364d2cb21966"/>
+								<text><![CDATA[PlanName]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="424bffeb-5862-4de3-9cdf-33eabe462c64"/>
+								<textFieldExpression><![CDATA[$F{PlanName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="106c595a-d728-4969-8425-f95ff4a98d95">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="47c5ba83-c185-460b-bac7-539884ed5dc1"/>
+								<text><![CDATA[Duration]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="342d99c8-8ac2-465d-aa17-87ea77b5d79d"/>
+								<textFieldExpression><![CDATA[$F{Duration}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a23bf8b3-67fe-4da6-b801-673622175406">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8adf8137-6ebd-4c84-8284-f33a1eebea6c"/>
+								<text><![CDATA[ExpiryDate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="5c587792-2c52-43a7-b0be-617368469511"/>
+								<textFieldExpression><![CDATA[$F{ExpiryDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="cc936c29-c6f8-4a95-8ed7-4c2da99cd198">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="bad67396-832a-43f5-9086-04a4e3b26f90"/>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="34f7d3ba-752d-4a1c-959b-ede7b409c4f5"/>
+								<textFieldExpression><![CDATA[$F{Amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="be9f796a-93fb-43df-b182-5d1a4a140fdc">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0362396b-5d58-48d1-84f9-eb694ae4ac4c"/>
+								<text><![CDATA[Paid]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="421e5772-4154-4a7c-8879-847b44853bd7"/>
+								<textFieldExpression><![CDATA[$F{Paid}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="11743814-0ec3-44de-8efb-a9d0d1bf6a3f">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="28267a47-59ed-42ba-aa22-1d1f8aafa033"/>
+								<text><![CDATA[Due]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="dcede907-ff24-4664-b1d8-bc47f2c5591f"/>
+								<textFieldExpression><![CDATA[$F{Due}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</title>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
